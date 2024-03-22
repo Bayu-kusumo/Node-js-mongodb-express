@@ -1,0 +1,38 @@
+<%- include('layout/header') %>
+<style>
+    body{
+        background-image: url('/images/bg-2.jpg');
+        background-size: 100%;
+    }
+    tbody{
+        color: rgb(104, 105, 105);
+    }
+</style>
+    <h1 class=".bg-secondary-subtle" style="padding-bottom: 10px; position: absolute; padding-bottom: 10px;padding-right: 10px; border-bottom-left-radius: 10px; border-bottom-right-radius: 10px;">Home Page</h1><br><br><br>      <% if (users !='') { %>
+            <table class="table table-responsive">
+                <thead class="table-dark">
+                    <th>No</th>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th>Call</th>
+                    <th>Action</th> 
+                </thead>
+                <tbody>
+                    <% users.forEach((row, index) => { ; %> 
+                        <tr>
+                        <td><%= index+1 %></td>
+                        <td><%= row.id %></td>
+                        <td style="color: rgb(91, 91, 91);"><%= row.name %></td>
+                        <td style="color: rgb(255, 255, 255);"><%= row.email %></td>
+                        <td style="color: rgb(226, 226, 226);"><%= row.phone %></td>
+                        <td><a href="/edit/<%= row._id %>" class="" href="/add"><i class="fas fa-pen mx-1"></i></a> 
+                            <a href="/delete/<%= row._id %>" class="" style="text-decoration: none;" href="/delete"><i class="fa-poo mx-1"></i></a></td>
+                    </tr>
+                        <% }) %> 
+                </tbody>
+              </table>
+        <% } else { %>
+            <h1>Data not found</h1>
+            <% } %>
+<%- include('layout/footer') %>
