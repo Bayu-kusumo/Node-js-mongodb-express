@@ -1,7 +1,13 @@
 <%- include('layout/header') %>
-<div class="row g-3 align-items-center">
+<style>
+  body{
+    background-image: url('/images/Iphone\ wallpaper\ backgrounds_\ aesthetic\ background.jpg');
+    overflow: hidden;
+  }
+</style>
+<div class="row g-3 p-3" style="width: 800px; margin: auto; margin-top: 30px;">
   <form action="/add" method="POST" enctype="application/x-www-form-urlencoded"> 
-    <h2>Sign Up</h2>
+    <h2>Add User</h2>
 
     <div class="form-floating mb-3">
         <input type="text" name="name" class="form-control" id="floatingUsername" placeholder="username">
@@ -21,11 +27,13 @@
       </div>
 
       <!-- ask for phone number -->
-      <div class="form-floating">
+      <div class="form-floating" style="margin-bottom: 40px;">
         <input type="text" name="phone" class="form-control" id="floatingPassword" placeholder="Password">
         <label for="floatingPhoneNumber">Phone Number</label>
       </div>
-    <button type="submit" class="btn">Sign Up</button>
+      <div class="d-grid gap-2">
+    <button type="submit" class="btn btn-primary">Add User</button>
+      </div>
 </form>
 </div>
 

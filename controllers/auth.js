@@ -1,5 +1,9 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/users');
+const session = require('express-session');
+const express = require('express');
+const app = express();
+require('dotenv').config();
 
 const existingUser = async(req,res)=>{
     const user = await User.findOne({name: req.body.name});
@@ -11,6 +15,11 @@ const confirmPass = async (password, confirmPassword) => {
     return password === confirmPassword;
 };
 
+// app.use(session({
+//     secret: process.env.SESSION_SECRET,
+//     resave: false,
+//     saveUninitialized: true
+// }))
 
 exports.register= ( async(req,res)=>{
         try {
@@ -36,3 +45,24 @@ exports.register= ( async(req,res)=>{
             console.log(error);
         }
     }   );
+
+    exports.login=(async(req,res)=>{
+        try {
+            const user = await User.findOne({name: req.body.name});
+            if(!user){
+                res.send("User Cannot be found");
+            }
+        
+            const matchingPassword = await bcrypt.compare(req.body.password, user.password);
+
+            if(matchingPassword){
+                req.session.userid=user._id;
+                res.redirect('/home');
+                console.log(user._id);
+            } else {
+                res.send('Wrong Password');
+            }
+        } catch (error) {
+        console.log(error);
+        }
+    })

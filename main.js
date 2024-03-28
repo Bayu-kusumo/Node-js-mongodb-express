@@ -25,6 +25,14 @@ const path = require('path');
 //import bcrypt
 const bcrypt = require('bcrypt');
 
+//JsonWebToken
+const jwt = require('jsonwebtoken');
+
+
+
+//cookie
+const cookie = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 //imports end
 
 
@@ -50,21 +58,26 @@ app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(express.urlencoded({ extended: false }));//digunakan untuk menghubungkan data dari html ke js
 app.use(express.json());
 
-
+app.use(cookieParser());
 
 app.use(session({
-    secret: 'secret key',
-    cookie: {maxAge: 6000},
-    saveUninitialized: false,
-    resave: false
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true
 }))
-app.use(flush());
+// app.use(session({
+//     secret: 'secret key',
+//     cookie: {maxAge: 6000},
+//     saveUninitialized: false,
+//     resave: false
+// }))
+// app.use(flush());
 
-app.use((req,res,next)=>{
-    res.locals.message;
-    delete req.session.message;
-    next();
-})
+// app.use((req,res,next)=>{
+//     res.locals.message;
+//     delete req.session.message;
+//     next();
+// })
 
 //set view engine
 app.set('view engine', 'ejs');
@@ -75,8 +88,16 @@ app.use('/auth', require('./routes/auth'));
 
 
 
+//cookie
+//send cookie
+// app.get('/get-cookie', (req,res)=>{
+//     // res.setHeader('Set-Cookie', 'newUser=true');
 
-//webserver
-app.listen(PORT, ()=>{
-    console.log(`Server is currently running on port:${PORT}`);
-})
+//     res.cookie('newUser', false);
+//     res.cookie('isEmployee', true, {maxAge: 1000 * 60 * 60 * 24, httpOnly: true});
+
+//     res.send('you got the cookies!')
+// });
+
+app.listen(PORT)
+console.log(`webserver is running at port ${PORT}`);
